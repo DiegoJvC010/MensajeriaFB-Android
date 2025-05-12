@@ -25,7 +25,10 @@ import com.example.mensajeriafb.ui.theme.MensajeriaFBTheme
 
 @Composable
 fun MensajeriaApp(token: String, lastMsg: Pair<String, String>?) {
+    //se crea estado de scroll para cuando el contenido sea mas largo que la pantalla
     val scrollState = rememberScrollState()
+
+    //aplica el tema de la app
     MensajeriaFBTheme(darkTheme = true) {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -43,6 +46,7 @@ fun MensajeriaApp(token: String, lastMsg: Pair<String, String>?) {
                         )
                     )
             ) {
+                //columna principal con espacio y scroll habilitado
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -50,9 +54,9 @@ fun MensajeriaApp(token: String, lastMsg: Pair<String, String>?) {
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    AppHeader()
-                    TokenSection(token)
-                    MessageSection(lastMsg)
+                    AppHeader()                  //encabezado de la aplicacion
+                    TokenSection(token)          //seccion para mostrar y copiar token
+                    MessageSection(lastMsg)      //seccion para ultimo mensaje
                 }
             }
         }
@@ -75,7 +79,7 @@ fun AppHeader() {
         )
         Spacer(modifier = Modifier.width(12.dp))
         Text(
-            text = "FCM Mensajería",
+            text = "FCM Mensajeria",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
         )
@@ -84,7 +88,10 @@ fun AppHeader() {
 
 @Composable
 fun TokenSection(token: String) {
+    //obtener manager del portapapeles
     val clipboard = LocalClipboardManager.current
+
+    //tarjeta para mostrar token con fondo semitransparente
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -114,6 +121,7 @@ fun TokenSection(token: String) {
                 )
             }
 
+            //caja para mostrar el token y boton de copiar
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -129,10 +137,11 @@ fun TokenSection(token: String) {
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = {
+                        //copiar token al portapapeles
                         clipboard.setText(AnnotatedString(token))
                     }) {
                         Icon(
-                            imageVector = Icons.Filled.ContentCopy, // o cualquier icono de “copy”
+                            imageVector = Icons.Filled.ContentCopy,
                             contentDescription = "Copiar token",
                             tint = Color.White
                         )
@@ -143,8 +152,10 @@ fun TokenSection(token: String) {
     }
 }
 
+
 @Composable
 fun MessageSection(lastMsg: Pair<String, String>?) {
+    //tarjeta para mostrar ultimo mensaje o indicador de vacio
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -156,6 +167,7 @@ fun MessageSection(lastMsg: Pair<String, String>?) {
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            //fila con icono y etiqueta de mensaje
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(bottom = 4.dp)
@@ -168,16 +180,16 @@ fun MessageSection(lastMsg: Pair<String, String>?) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    "Último mensaje:",
+                    "Ultimo mensaje:",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.secondary
                 )
             }
 
             if (lastMsg != null) {
-                MessageContent(lastMsg)
+                MessageContent(lastMsg)      //mostrar contenido si existe mensaje
             } else {
-                EmptyMessageContent()
+                EmptyMessageContent()        //mostrar texto de sin mensajes
             }
         }
     }
@@ -185,6 +197,7 @@ fun MessageSection(lastMsg: Pair<String, String>?) {
 
 @Composable
 fun MessageContent(lastMsg: Pair<String, String>) {
+    //seccion con titulo y cuerpo del mensaje
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -193,9 +206,10 @@ fun MessageContent(lastMsg: Pair<String, String>) {
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        //mostrar titulo del mensaje
         Column {
             Text(
-                "Título:",
+                "Titulo:",
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -211,6 +225,7 @@ fun MessageContent(lastMsg: Pair<String, String>) {
             modifier = Modifier.padding(vertical = 4.dp)
         )
 
+        //mostrar cuerpo del mensaje
         Column {
             Text(
                 "Cuerpo:",
@@ -228,6 +243,7 @@ fun MessageContent(lastMsg: Pair<String, String>) {
 
 @Composable
 fun EmptyMessageContent() {
+    //caja centrada para indicar que no hay mensajes aun
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -237,7 +253,7 @@ fun EmptyMessageContent() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            "— Aún no hay mensajes —",
+            "— Aun no hay mensajes —",
             style = MaterialTheme.typography.bodyLarge,
             color = Color.White.copy(alpha = 0.7f)
         )
