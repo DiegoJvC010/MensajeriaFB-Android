@@ -2,7 +2,9 @@ package com.example.mensajeriafb
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Done
@@ -23,6 +25,7 @@ import com.example.mensajeriafb.ui.theme.MensajeriaFBTheme
 
 @Composable
 fun MensajeriaApp(token: String, lastMsg: Pair<String, String>?) {
+    val scrollState = rememberScrollState()
     MensajeriaFBTheme(darkTheme = true) {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -43,6 +46,7 @@ fun MensajeriaApp(token: String, lastMsg: Pair<String, String>?) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(scrollState)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
