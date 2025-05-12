@@ -15,8 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 
 class MainActivity : ComponentActivity() {
-    //obtener objeto de preferencias para guardar datos simples
-    private val prefs by lazy { getSharedPreferences("fcm_prefs", MODE_PRIVATE) }
     //estado para mostrar token de FCM en la interfaz
     private val tokenState   = mutableStateOf("Obteniendo token...")
     //estado para mostrar el ultimo mensaje recibido (titulo, cuerpo)
